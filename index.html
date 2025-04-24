@@ -21,38 +21,30 @@
     .message {
       font-size: 2.5rem;
       text-align: center;
+      white-space: pre-line;
+      position: relative;
+    }
+
+    .message::after {
+      content: 'Are You Ready?';
+      animation: updateText 18s steps(1, end) infinite;
+      display: inline-block;
+      text-shadow: 0 0 10px #0ff, 0 0 20px #0ff, 0 0 30px #0ff;
+    }
+
+    @keyframes updateText {
+      0%    { content: 'Are You Ready?'; }
+      14%   { content: 'It is Time!'; }
+      28%   { content: '10'; }
+      42%   { content: '9'; }
+      56%   { content: '8'; }
+      70%   { content: '7'; }
+      84%   { content: '6'; }
+      100%  { content: 'Are You Ready?'; }
     }
   </style>
 </head>
 <body>
-  <div class="message" id="message"></div>
-
-  <script>
-    const messages = [
-      "Are You Ready?",
-      "It is Time!",
-      "10",
-      "9",
-      "8",
-      "7",
-      "6",
-      "5",
-      "9",
-      "8",
-      "7",
-      "6"
-    ];
-
-    const msgElement = document.getElementById("message");
-    let index = 0;
-
-    function rotateMessage() {
-      msgElement.textContent = messages[index];
-      index = (index + 1) % messages.length;
-    }
-
-    rotateMessage();
-    setInterval(rotateMessage, 1500); // change every 1.5 seconds
-  </script>
+  <div class="message"></div>
 </body>
 </html>
