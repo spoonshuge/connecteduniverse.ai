@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Connected Universe</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      background-color: #000;
+      color: #0ff;
+      font-family: 'Orbitron', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .message {
+      font-size: 2.5rem;
+      text-align: center;
+      animation: rotateMessages 18s linear infinite;
+      white-space: pre-line;
+    }
+
+    @keyframes rotateMessages {
+      0%, 5.55%   { content: 'Are You Ready?'; }
+      5.56%, 11.11% { content: 'It is Time!'; }
+      11.12%, 16.66% { content: '10'; }
+      16.67%, 22.22% { content: '9'; }
+      22.23%, 27.77% { content: '8'; }
+      27.78%, 33.33% { content: '7'; }
+      33.34%, 38.88% { content: '6'; }
+      38.89%, 44.44% { content: 'Are You Ready?'; }
+      44.45%, 50%    { content: 'It is Time!'; }
+      50.01%, 55.55% { content: '10'; }
+      55.56%, 61.11% { content: '9'; }
+      61.12%, 66.66% { content: '8'; }
+      66.67%, 72.22% { content: '7'; }
+      72.23%, 77.77% { content: '6'; }
+    }
+
+    .message::after {
+      content: 'Are You Ready?';
+      animation: updateText 18s steps(1, end) infinite;
+    }
+
+    @keyframes updateText {
+      0%    { content: 'Are You Ready?'; }
+      14%   { content: 'It is Time!'; }
+      28%   { content: '10'; }
+      42%   { content: '9'; }
+      56%   { content: '8'; }
+      70%   { content: '7'; }
+      84%   { content: '6'; }
+      100%  { content: 'Are You Ready?'; }
+    }
+  </style>
+</head>
+<body>
+  <div class="message"></div>
+</body>
+</html>
