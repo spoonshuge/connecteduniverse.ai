@@ -8,43 +8,95 @@
   <style>
     body {
       margin: 0;
-      background-color: #000;
-      color: #0ff;
       font-family: 'Orbitron', sans-serif;
+      height: 100vh;
+      overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 100vh;
-      overflow: hidden;
+      background-color: #000;
+      transition: background-color 0.5s;
     }
 
     .message {
       font-size: 2.5rem;
       text-align: center;
       white-space: pre-line;
+      color: #0ff;
       position: relative;
     }
 
     .message::after {
       content: 'Are You Ready?';
-      animation: updateText 18s steps(1, end) infinite;
+      animation: updateText 24s steps(1, end) infinite;
       display: inline-block;
-      text-shadow: 0 0 10px #0ff, 0 0 20px #0ff, 0 0 30px #0ff;
+      text-shadow: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor;
+    }
+
+    .by-spoon {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%) translateY(0);
+      opacity: 0;
+      color: red;
+      font-size: 1.5rem;
+      animation: slideIn 24s linear infinite;
+      pointer-events: none;
     }
 
     @keyframes updateText {
-      0%    { content: 'Are You Ready?'; }
-      14%   { content: 'It is Time!'; }
-      28%   { content: '10'; }
-      42%   { content: '9'; }
-      56%   { content: '8'; }
-      70%   { content: '7'; }
-      84%   { content: '6'; }
-      100%  { content: 'Are You Ready?'; }
+      0%    { content: 'Are You Ready?'; color: #0ff; }
+      8.3%  { content: 'It is Time!'; }
+      16.6% { content: '10'; }
+      25%   { content: '9'; }
+      33.3% { content: '8'; }
+      41.6% { content: '7'; }
+      50%   { content: '6'; }
+      58.3% { content: 'OWNED!!'; color: red; }
+      100%  { content: 'OWNED!!'; color: red; }
     }
+
+    @keyframes slideIn {
+      0%, 57% {
+        transform: translateX(-50%) translateY(0);
+        opacity: 0;
+      }
+      58% {
+        transform: translateX(-50%) translateY(50px);
+        opacity: 1;
+      }
+      70% {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    body.green-bg .message::after {
+      color: red;
+    }
+
+    @keyframes backgroundShift {
+      0%, 57% {
+        background-color: #000;
+      }
+      58%, 100% {
+        background-color: #0f0;
+      }
+    }
+
+    body {
+      animation: backgroundShift 24s linear infinite;
+    }
+
   </style>
 </head>
 <body>
-  <div class="message"></div>
+  <div class="message">
+    <div class="by-spoon">by spoon</div>
+  </div>
 </body>
 </html>
