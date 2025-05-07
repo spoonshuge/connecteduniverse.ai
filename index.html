@@ -1,102 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Connected Universe</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Orbitron', sans-serif;
-      height: 100vh;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: #000;
-      transition: background-color 0.5s;
-    }
-
-    .message {
-      font-size: 2.5rem;
-      text-align: center;
-      white-space: pre-line;
-      color: #0ff;
-      position: relative;
-    }
-
-    .message::after {
-      content: 'Are You Ready?';
-      animation: updateText 24s steps(1, end) infinite;
-      display: inline-block;
-      text-shadow: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor;
-    }
-
-    .by-spoon {
-      position: absolute;
-      top: 100%;
-      left: 50%;
-      transform: translateX(-50%) translateY(0);
-      opacity: 0;
-      color: red;
-      font-size: 1.5rem;
-      animation: slideIn 24s linear infinite;
-      pointer-events: none;
-    }
-
-    @keyframes updateText {
-      0%    { content: 'Are You Ready?'; color: #0ff; }
-      8.3%  { content: 'It is Time!'; }
-      16.6% { content: '10'; }
-      25%   { content: '9'; }
-      33.3% { content: '8'; }
-      41.6% { content: '7'; }
-      50%   { content: '6'; }
-      58.3% { content: 'OWNED!!'; color: red; }
-      100%  { content: 'OWNED!!'; color: red; }
-    }
-
-    @keyframes slideIn {
-      0%, 57% {
-        transform: translateX(-50%) translateY(0);
-        opacity: 0;
-      }
-      58% {
-        transform: translateX(-50%) translateY(50px);
-        opacity: 1;
-      }
-      70% {
-        transform: translateX(-50%) translateY(0);
-        opacity: 1;
-      }
-      100% {
-        opacity: 1;
-      }
-    }
-
-    body.green-bg .message::after {
-      color: red;
-    }
-
-    @keyframes backgroundShift {
-      0%, 57% {
-        background-color: #000;
-      }
-      58%, 100% {
-        background-color: #0f0;
-      }
-    }
-
-    body {
-      animation: backgroundShift 24s linear infinite;
-    }
-
-  </style>
+  <meta charset="UTF-8">
+  <title>Send to Azure Function</title>
 </head>
 <body>
-  <div class="message">
-    <div class="by-spoon">by spoon</div>
-  </div>
+  <h1>Azure Function “Giveaway” Test</h1>
+
+  <!-- A form for GET -->
+  <form id="getForm">
+    <label>
+      Name (GET):
+      <input type="text" id="getName" placeholder="Alice" required>
+    </label>
+    <button type="submit">Send GET</button>
+  </form>
+
+  <!-- A form for POST -->
+  <form id="postForm" style="margin-top:1em;">
+    <label>
+      Name (POST):
+      <input type="text" id="postName" placeholder="Bob" required>
+    </label>
+    <button type="submit">Send POST</button>
+  </form>
+
+  <h2>Response:</h2>
+  <pre id="result" style="background:#f4f4f4; padding:1em;"></pre>
+
+  <script>
+    const endpoint = 'https://slcgiveaway.azurewebsites.net/api/http_trigger_giveaway';
+
+    // Handle GET form
+    document.getElementById('getForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const name = document.getElementById('getName').value;
+      const res = await fetch(`${endpoint}?name=${encodeURIComponent(name)}`);
+      document.getElementById('result').textContent = await res.text();
+    });
+
+    // Handle POST form
+    document.getElementById('postForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const name = document.getElementById('postName').value;
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name })
+      });
+      document.getElementById('result').textContent = await res.text();
+    });
+  </script>
 </body>
 </html>
